@@ -11,7 +11,7 @@ function LisaToode() {
       uuendaSonum("Tühja nimetusega ei saa toodet lisada!");
     } else {
       uuendaSonum("Toode nimega " + inputiLuger.current.value + " lisatud!");
-    }
+    } 
   }
 
   return (

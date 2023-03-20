@@ -5,6 +5,7 @@ import Avaleht from './pages/Avaleht';
 import Ostukorv from './pages/Ostukorv';
 import LisaToode from './pages/LisaToode';
 import Seaded from './pages/Seaded';
+import Meist from './pages/Meist';
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
         <button className="nupp">Seaded</button>
       </Link>
 
+      <Link to="/meist">
+        <button className="nupp">Meist</button>
+      </Link>
+
       {/* <p></p>
       <div>Tekst</div> */}
       {/* <span></span> */}
@@ -37,6 +42,7 @@ function App() {
         <Route path='ostukorv' element={ <Ostukorv /> } />
         <Route path='lisa-toode' element={ <LisaToode /> } />
         <Route path='seaded' element={ <Seaded /> } />
+        <Route path='meist' element={ <Meist /> } />
       </Routes>
 
     </div>
