@@ -16,4 +16,31 @@
   cursor: pointer;
 }
 
-/*  */
+.kuldne {
+  color: goldenrod;
+}
+
+.url-aktiivne {
+  height: 30px;
+  border-radius: 5px;
+}
+
+.light {
+  background-color: white;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.dark {
+  background-color: black;
+  color: white;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.varviline {
+  background-color: aliceblue;
+  color: blue;
+  height: 100%;
+  min-height: 100vh;
+}
