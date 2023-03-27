@@ -24,6 +24,9 @@ function Seaded() {
 // WCAG - Web Content Accessibility Guidelines, EU seadused, kohustuslik
 
   const salvestaAadress = () => {
+    // if / else <--- teeme kontrolli, kas on meile sobiv sisu
+    // else asemel "return"
+    // react-toastify <--- hüpikaken
     localStorage.setItem("aadress", aadressViide.current.value);
   }
 

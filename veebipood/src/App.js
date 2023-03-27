@@ -106,3 +106,27 @@ export default App;
 // 3 aastat tööd     10
 // 3 aastat Youtube või Udemy't 7
 // 3 aastat ülikooli  4
+
+
+
+
+// Läheme raskemaks. JavaScripti koolitused:
+// Esimesena: https://www.youtube.com/watch?v=W6NZfCO5SIk (kokku pakitud 1h sisse JavaScripti põhiteadmised, pigem nii lühikese ajaga keeruline mõista, aga annab pildi kiiresti korraks JavaScriptist ette)
+// Järgmisena:
+// https://www.codecademy.com/learn/introduction-to-javascript
+// https://www.udacity.com/course/intro-to-javascript--ud803
+// Nende kahe puhul palun mitte korraga vaadata ühte algusest lõpuni vaid nii, et teete ühes teema ära ja siis vaatate teises sama teemat. Ise teeksin nii:
+// CodeAcademy peatükid 1-2
+// Udacity peatükid 1-2 andmetüüpidest: string, number, boolean / const, let
+// CodeAcademy peatükk 3
+// Udacity peatükk 3: if else, &&, ||
+// CodeAcademy peatükk 4,5
+// Udacity peatükk 5 (4 jääb vahele!)   function() {}, const = () => {}
+// CodeAcademy peatükk 6
+// Udacity peatükk 6      ["","",""]   .sort(), .filter()
+// CodeAcademy peatükk 7
+// Udacity peatükk 4 (!)     forEach()
+// CodeAcademy lõpuni ehk peatükid 8,9,10
+// Udacity lõpuni ehk peatükk 7     {"võti": "väärtus"}
+
+// useState, useRef ---> kõik HTMLga seotud

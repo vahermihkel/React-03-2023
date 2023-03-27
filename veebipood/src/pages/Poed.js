@@ -37,6 +37,13 @@ function Poed() { // array   list
     uuendaPoed(poed.slice());
   }
 
+  // const sorteeriSonadeArv = () => {
+  //                   // a tükeldan tühiku alusel   ["Rocca", "al", "mare"]
+  //                   // b tükeldan tühiku alusel   ["Vesse"]
+  //   poed.sort((a,b) => a.split(" ").length - b.split(" ").length); 
+  //   uuendaPoed(poed.slice());
+  // }
+
   const filtreeriELopus = () => {
     const tulem = poed.filter(element => element.endsWith("e"));
     uuendaPoed(tulem);
@@ -111,7 +118,7 @@ function Poed() { // array   list
 
 
       {/* yksPood - Ülemiste, Viimsi, Rocca al Mare */}
-      {poed.map(yksPood => <div>{yksPood}</div>)}
+      {poed.map((yksPood, i) => <div key={i}>{yksPood}</div>)}
       <div>-------------</div>
       <div>Ülemiste</div>
       <div>Viimsi</div>

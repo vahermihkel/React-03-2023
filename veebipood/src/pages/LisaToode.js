@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import tootedFailist from "../data/tooted.json";
 
 function LisaToode() {
   const [sonum, uuendaSonum] = useState("Lisa toode!"); // use.. Reacti erikoodid, mida tuleb alati importida
@@ -11,6 +12,7 @@ function LisaToode() {
       uuendaSonum("Tühja nimetusega ei saa toodet lisada!");
     } else {
       uuendaSonum("Toode nimega " + inputiLuger.current.value + " lisatud!");
+      tootedFailist.push(inputiLuger.current.value);
     } 
   }
 
