@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 
 function Seaded() {
   const [keel, uuendaKeel] = useState(localStorage.getItem("keel") || "est"); // getItem võtab viimase setItem-i
@@ -22,19 +23,47 @@ function Seaded() {
   }
 // Labeli sees htmlFor=""    img sees alt="" <--- alternative text
 // WCAG - Web Content Accessibility Guidelines, EU seadused, kohustuslik
+    // if / else <--- teeme kontrolli, kas on meile sobiv sisu
+    // else asemel "return"     TEEB SAMA VÄLJA
+    // react-toastify <--- hüpikaken
 
   const salvestaAadress = () => {
-    // if / else <--- teeme kontrolli, kas on meile sobiv sisu
-    // else asemel "return"
-    // react-toastify <--- hüpikaken
+    if (aadressViide.current.value === "") {
+      toast.error("Tühja aadressi ei saa sisestada!");
+      return;
+    }   // Mustamäe === mustamäe
+    //  // mustamäe === mustamäe
+    if (aadressViide.current.value[0] === aadressViide.current.value[0].toLowerCase()) {
+      toast.error("Addressi ei saa sisestada väikese algustähega!");
+      return;
+    }
+    toast.success("Aadress edukalt sisestatud");
     localStorage.setItem("aadress", aadressViide.current.value);
   }
 
   const salvestaEmail = () => {
+    if (emailViide.current.value === "") {
+      toast.error("Tühja emaili ei saa sisestada!");
+      return;
+    }
+    if (emailViide.current.value.includes("@") === false) {
+      toast.error("E-maili ei saa sisestada kui pole @ märki");
+      return;
+    }
+    toast.success("Email edukalt sisestatud");
     localStorage.setItem("email", emailViide.current.value);
   }
 
   const salvestaTelefon = () => {
+    if (telefonViide.current.value === "") {
+      toast.error("Tühja telefoni ei saa sisestada!");
+      return;
+    }
+    if (/^[0-9]*$/.test(telefonViide.current.value) === false) {
+      toast.error("Telefon peab koosnema ainult numbritest!");
+      return;
+    }
+    toast.success("Telefon edukalt sisestatud");
     localStorage.setItem("telefon", telefonViide.current.value);
   }
 
@@ -59,6 +88,7 @@ function Seaded() {
       {keel === "est" && <div>Leht on eesti keelne</div>}
       {keel === "eng" && <div>The page is in English</div>}
       {keel === "rus" && <div>Pycckij Rsõk</div>}
+      <ToastContainer />
     </div>
   )
 }

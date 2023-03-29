@@ -94,10 +94,23 @@ function Poed() { // array   list
     uuendaPoed(vastus);
   }
 
+  const arvutaTahedKokku = () => {
+    // let ---> saab anda muutujale korduvalt väärtust
+    // ilus on igalepoole on const panna ja KUI ON VAJADUS, siis panen let
+
+    let summa = 0; // yksPood     el     toode       (a,b)
+            //  Ülemiste =>   8   =   0   +   8
+            //  Viimsi   =>  14   =   8   +   6
+      // Rocca al Mare   =>  27   =  14   +  13
+    poed.forEach(element => summa = summa + element.length);
+    return summa;
+  }
+
   return (
     <div>
       <button onClick={tagasiOriginaali}>Tagasi originaal</button>
       <div>Poode on kokku: {poed.length} tk</div>
+      <div>Kõikide poodide tähemärkide arv on: {arvutaTahedKokku()} </div>
       <button onClick={sorteeriAZ}>Sorteeri A-Z</button>
       <button onClick={sorteeriZA}>Sorteeri Z-A</button>
       <button onClick={sorteeriTahedKasv}>Sorteeri tähed kasvavalt</button>

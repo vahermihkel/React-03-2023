@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import ostukorvFailist from "../data/ostukorv.json";
 import tootedFailist from "../data/tooted.json";
 
@@ -20,7 +21,9 @@ function Tooted() {
       <div>Tooteid kokku: {tooted.length} tk</div>
       {tooted.map((el, ix) => 
         <div key={ix}>
-          {el} 
+          <Link to={"/toode/" + ix}>
+            {el} 
+          </Link>
           <button onClick={() => lisaOstukorvi(el)}>Lisa ostukorvi</button> 
         </div> )}
     </div>

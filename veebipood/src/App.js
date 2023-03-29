@@ -86,8 +86,8 @@ function App() {                                                       //.split(
         <Route path='poed' element={ <Poed /> } />
         <Route path='tooted' element={ <Tooted /> } />
         <Route path='halda' element={ <HaldaTooted /> } />
-        <Route path='toode' element={ <YksikToode /> } />
-        <Route path='muuda' element={ <MuudaToode /> } />
+        <Route path='toode/:jrkNr' element={ <YksikToode /> } />
+        <Route path='muuda/:index' element={ <MuudaToode /> } />
       </Routes>
 
     </div>
