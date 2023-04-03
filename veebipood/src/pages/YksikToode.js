@@ -13,9 +13,11 @@ function YksikToode() {
   return (
     <div>
       {leitud !== undefined && <div>
-        <div>Toote nimetus: {leitud}</div>
+        <div>Toote nimetus: {leitud.nimi}</div>
+        <div>Toote hind: {leitud.hind}</div>
         <div>Toode on järjekorras number: {Number(jrkNr) + 1}</div>
-        <div>Toote pilt on: .....</div>
+        {/* <div>Toote pilt on: .....</div> */}
+        <img src={leitud.pilt} alt="" />
       </div>}
       {leitud === undefined && <div>Toodet ei leitud!</div>}
     </div>

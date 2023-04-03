@@ -10,30 +10,30 @@ function Poed() { // array   list
   }
 
   const sorteeriAZ = () => {
-    poed.sort(); // default sorteerimine: A-Z
-    // poed.sort((a,b) => a.localeCompare(b));
+    //poed.sort(); // default sorteerimine: A-Z
+    poed.sort((a,b) => a.nimi.localeCompare(b.nimi));
     uuendaPoed(poed.slice()); // kustutab mälukoha
   }
 
   const sorteeriZA = () => {
-    poed.sort((a,b) => b.localeCompare(a)); // mittedefault sorteerimine:  (a,b) => TINGIMUST mille alusel sort
+    poed.sort((a,b) => b.nimi.localeCompare(a.nimi)); // mittedefault sorteerimine:  (a,b) => TINGIMUST mille alusel sort
     uuendaPoed(poed.slice()); // kustutab mälukoha
   }
 
   const sorteeriTahedKasv = () => {
 // a - Ülemiste    8  -  6   ---> järjekorda kas tuleb positiivne arv või negatiivne
 // b - Viimsi     6  -  11
-    poed.sort((a,b) => a.length - b.length); 
+    poed.sort((a,b) => a.nimi.length - b.nimi.length); 
     uuendaPoed(poed.slice());
   }
 
   const sorteeriTahedKah = () => {
-    poed.sort((a,b) => b.length - a.length); 
+    poed.sort((a,b) => b.nimi.length - a.nimi.length); 
     uuendaPoed(poed.slice());
   }
 
   const sorteeriKolmasTaht = () => {
-    poed.sort((a,b) => a[2].localeCompare(b[2])); 
+    poed.sort((a,b) => a.nimi[2].localeCompare(b.nimi[2])); 
     uuendaPoed(poed.slice());
   }
 
@@ -45,52 +45,56 @@ function Poed() { // array   list
   // }
 
   const filtreeriELopus = () => {
-    const tulem = poed.filter(element => element.endsWith("e"));
+    const tulem = poed.filter(element => element.nimi.endsWith("e"));
     uuendaPoed(tulem);
   }
 
   const filtreeriKellel9Tahte = () => {
-    const tulem = poed.filter(element => element.length === 9);
+    const tulem = poed.filter(element => element.nimi.length === 9);
     uuendaPoed(tulem);
   }
 
   const filtreeriKellelVah7Tahte = () => {
-    const tulem = poed.filter(element => element.length > 7);
+    const tulem = poed.filter(element => element.nimi.length > 7);
     uuendaPoed(tulem);
   }
 
   const filtreeriSisaldabTaheLyhenditIs = () => {
-    const tulem = poed.filter(element => element.includes("is"));
+    const tulem = poed.filter(element => element.nimi.includes("is"));
     uuendaPoed(tulem);
   }
 
   const filtreeriKolmasTahtI = () => {
-    const tulem = poed.filter(element => element[2] === "i");
+    // "Kristiine"[2] ---> "i"
+    // {"nimi": "Kristiine"}.nimi   [2]
+    const tulem = poed.filter(element => element.nimi[2] === "i");
     uuendaPoed(tulem);
   }
 
   const muudaKoikSuureks = () => {
-    const vastus = poed.map(yksPood => yksPood.toUpperCase());
+    // "Kristiine"    "KRISTIINE"
+    // {"nimi": "Kristiine", "tel": "123"}        {"nimi": "KRISTIINE" , "tel": "123"} 
+    const vastus = poed.map(yksPood => {return {"nimi":yksPood.nimi.toUpperCase(), "tel": yksPood.tel}});
     uuendaPoed(vastus);
   }
 
   const muudaKoikVaikseks = () => {
-    const vastus = poed.map(yksPood => yksPood.toLowerCase());
+    const vastus = poed.map(yksPood => {return {"nimi":yksPood.nimi.toLowerCase(), "tel": yksPood.tel}});
     uuendaPoed(vastus);
   }
 
   const muudaKoikITahedOTaheks = () => {
-    const vastus = poed.map(yksPood => yksPood.replaceAll("i", "o"));
+    const vastus = poed.map(yksPood => {return {"nimi":yksPood.nimi.replaceAll("i", "o"), "tel": yksPood.tel}});
     uuendaPoed(vastus);
   }
 
   const muudaKoikideleKriipsudEtte = () => {
-    const vastus = poed.map(yksPood => "--" + yksPood);
+    const vastus = poed.map(yksPood => {return {"nimi": "--" + yksPood.nimi, "tel": yksPood.tel}});
     uuendaPoed(vastus);
   }
 
   const muudaKoikidelKolmasTahtMTaheks = () => {
-    const vastus = poed.map(yksPood => yksPood + yksPood.length);
+    const vastus = poed.map(yksPood => {return {"nimi": yksPood.nimi + yksPood.nimi.length, "tel": yksPood.tel}});
     uuendaPoed(vastus);
   }
 
@@ -102,7 +106,7 @@ function Poed() { // array   list
             //  Ülemiste =>   8   =   0   +   8
             //  Viimsi   =>  14   =   8   +   6
       // Rocca al Mare   =>  27   =  14   +  13
-    poed.forEach(element => summa = summa + element.length);
+    poed.forEach(element => summa = summa + element.nimi.length);
     return summa;
   }
 
@@ -131,15 +135,7 @@ function Poed() { // array   list
 
 
       {/* yksPood - Ülemiste, Viimsi, Rocca al Mare */}
-      {poed.map((yksPood, i) => <div key={i}>{yksPood}</div>)}
-      <div>-------------</div>
-      <div>Ülemiste</div>
-      <div>Viimsi</div>
-      <div>Rocca al Mare</div>
-      <div>Magistrali</div>
-      <div>Vesse</div>
-      <div>Kristiine</div>
-      <div>Järveotsa</div>
+      {poed.map((yksPood, i) => <div key={i}>{yksPood.nimi} - {yksPood.tel}</div>)}
     </div>
   )
 }
