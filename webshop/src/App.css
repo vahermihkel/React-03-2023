@@ -12,3 +12,9 @@
 .lang:active {
   padding: 1px;
 }
+
+.map {
+  height: 300px;
+  margin: 30px;
+  border-radius: 10px;
+}
