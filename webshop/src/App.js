@@ -16,21 +16,41 @@ import MaintainProducts from './pages/admin/MaintainProducts';
 import MaintainCategories from './pages/admin/MaintainCategories';
 import MaintainShops from './pages/admin/MaintainShops';
 
+import { useTranslation } from 'react-i18next';
+
 function App() {
+  const { t, i18n } = useTranslation(); 
 
   // Firebase-i üles  --->   faili järgi: 8-s, video järgi vaadata - 3.koolitus
   // react-toastify
+  
+  // Siia projekti lisage ka 3s ja 4s keel
+  // Favicon
+  // projekti nimi
+  // Google Font lisada
+
+  // Pange mõnda teise projekti ka Bootstrap
+  // Pange mõnda teise projekti ka React-i18next
+
+
+  const updateLanguage = (newLang) => {
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("language", newLang);
+  }
 
   return (
     <div className="App">
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">Webshop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link as={Link} to="/admin">{t("admin")}</Nav.Link>
+            <Nav.Link as={Link} to="/contact">{t("contact")}</Nav.Link>
+            <Nav.Link as={Link} to="/shops">{t("shops")}</Nav.Link>
+            <Nav.Link as={Link} to="/cart">{t("cart")}</Nav.Link>
           </Nav>
+          <img className="lang" src="/english.png" alt="" onClick={() => updateLanguage("en")} />
+          <img className="lang" src="/estonian.png" alt="" onClick={() => updateLanguage("ee")} />
         </Container>
       </Navbar>
 
@@ -42,7 +62,7 @@ function App() {
         <Route path="product" element={ <SingleProduct /> } />
         <Route path="admin" element={ <AdminHome /> } />
         <Route path="admin/add-product" element={ <AddProduct /> } />
-        <Route path="admin/edit-product" element={ <EditProduct /> } />
+        <Route path="admin/edit-product/:id" element={ <EditProduct /> } />
         <Route path="admin/maintain-products" element={ <MaintainProducts /> } />
         <Route path="admin/maintain-categories" element={ <MaintainCategories /> } />
         <Route path="admin/maintain-shops" element={ <MaintainShops /> } />
