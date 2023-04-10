@@ -1,20 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
+// import cartFromFile from "../../data/cart.json";
+import { Link } from 'react-router-dom';
+
+// SALVESTUSE VARIANDID:
+// 1. Andmebaas - Amazon, Microsoft, Oracle
+      // - seda näevad kõik. Tooted. Kategooriad. Poed.
+// 2. LocalStorage - Brauseris
+      // - seda näen vaid mina. Ostukorv.
 
 function Cart() {
-  // ostukorvi fail välja kuvada:
-  // üles useState
-  // HTMLs .map()
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
 
-  // võimaldage ostukorvist kustutada
+  const emptyCart = () => {
+    setCart([]); // uuendab HTMLi
+    localStorage.setItem("cart", JSON.stringify([])); // see uuendab localStorage-t
+  };
 
-  // ostukorvi tühjendada
+  const removeFromCart = (index) => {
+    cart.splice(index, 1);
+    setCart(cart.slice());
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
-  // ostukorvi kogusummat arvutada
-
-  // dünaamika - kui on 0 ostukorvi kogus, siis ei näidata "tühjendat" ja "kogusummat"
+  const totalSum = () => {
+    let sum = 0;
+    cart.forEach(product => sum = sum + product.price);
+    return sum;
+  };
 
   return (
-    <div>Cart</div>
+    <div>
+      {cart.length > 0 && <button onClick={emptyCart}>Empty all</button>}
+      {cart.length > 0 && <div>Products in cart: {cart.length}</div>}
+      {cart.map((product, index) => 
+        <div key={index}>
+            <img src={product.image} alt="" />
+            <div>{product.name}</div>
+            <div>{product.price}</div>
+          <button onClick={() => removeFromCart(index)}>x</button>
+        </div>
+        )}
+      {cart.length > 0 && <div>Total: {totalSum()} €</div>}
+      {cart.length === 0 && <div>Basket is empty. <Link to="/">Go shopping</Link></div>}
+    </div>
   )
 }
 

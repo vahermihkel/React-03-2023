@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom';
 function MaintainProducts() {
   const [products, setProducts] = useState(productsFromFile);
 
-  const deleteProduct = () => {
-    // testige
-    // refreshiga ilmuvad tagasi
-    setProducts();
+  const deleteProduct = (index) => {
+    productsFromFile.splice(index, 1);
+    setProducts(productsFromFile.slice());
   }
 
   return (
     <div>
       <div>{products.length} tk</div>
-        {products.map(product => 
+        {products.map((product, index) => 
           <div key={product.id}>
             <img src={product.image} alt="" />
             <div>{product.id}</div>
@@ -24,7 +23,7 @@ function MaintainProducts() {
             <div>{product.category}</div>
             <div>{product.description}</div>
             <div>{product.active}</div>
-            <button onClick={deleteProduct}>Kustuta</button>
+            <button onClick={() => deleteProduct(index)}>Kustuta</button>
             <Link to={"/admin/edit-product/" + product.id}>
               <button>Muuda</button>
             </Link>
