@@ -1,0 +1,66 @@
+.cart-top {
+  margin-top: 50px;
+  margin-left: 10%;
+}
+
+.product {
+  display: flex; /* sisu vasakult paremale */
+  justify-content: space-between;
+  margin: 0 10%;
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+}
+
+.name {
+  width: 140px;
+}
+
+.price {
+  width: 70px;
+}
+
+.button {
+  width: 30px;
+  height: 30px;
+}
+
+.button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.button:active {
+  padding: 1px;
+}
+
+.quantity {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  border: 1px solid lightgray;
+  height: 38px;
+  padding: 3px;
+  border-radius: 18px;
+}
+
+.total {
+  width: 80px;
+}
+
+.cart-bottom {
+  text-align: right;
+  margin-right: 10%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.disabled {
+  opacity: 0.3;
+  width: 30px;
+  height: 30px;
+}

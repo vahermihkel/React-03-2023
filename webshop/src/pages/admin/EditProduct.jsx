@@ -20,6 +20,7 @@ function EditProduct() {
   const descriptionRef = useRef();
   const activeRef = useRef();
   const navigate = useNavigate();
+  const [isIdUnique, setIdUnique] = useState(true);
 
   const edit = () => {
     const index = productsFromFile.findIndex(oneProduct => oneProduct.id === Number(id));
@@ -38,9 +39,11 @@ function EditProduct() {
     navigate("/admin/maintain-products");
   }
 
-  const [isIdUnique, setIdUnique] = useState(true);
-
   const checkIdUniqueness = () => {
+      if (idRef.current.value === id) {
+        setIdUnique(true);
+        return;
+      }
   //   -1          productsFromFile.findIndex(product => product.id === Number(idRef.current.value));
   //   undefined   productsFromFile.find(product => product.id === Number(idRef.current.value));
   //   []          productsFromFile.filter(product => product.id === Number(idRef.current.value))[0];
