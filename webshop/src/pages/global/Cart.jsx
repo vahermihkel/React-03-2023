@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 // import cartFromFile from "../../data/cart.json";
 import { Link } from 'react-router-dom';
 import "../../css/Cart.css";
@@ -12,6 +12,21 @@ import Button from '@mui/material/Button';
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+  const [parcelMachines, setParcelMachines] = useState([]); // mida välja näitan - 5, 2, 10, 500, 1255, 3, 0
+  const [dbParcelMachines, setDbParcelMachines] = useState([]); // mille seast filterdan -- ALATI 1255
+  const searchedRef = useRef();
+
+  // API endpoint    API otspunkt
+
+  // scrape / scraping
+  useEffect(() => {
+    fetch("https://www.omniva.ee/locations.json")
+      .then(res => res.json())
+      .then(json => {
+        setParcelMachines(json);
+        setDbParcelMachines(json);
+      })
+  }, []);
 
   const emptyCart = () => {
     setCart([]); // uuendab HTMLi
@@ -45,6 +60,12 @@ function Cart() {
     return sum.toFixed(2);
   };
 
+  const searchFromPMs = () => {
+    const result = dbParcelMachines.filter(el => 
+      el.NAME.toLowerCase().includes(searchedRef.current.value.toLowerCase()))
+    setParcelMachines(result);
+  }
+
   return (
     <div>
       {cart.length > 0 && 
@@ -71,6 +92,14 @@ function Cart() {
       {cart.length > 0 && 
         <div className="cart-bottom">
           Total: {totalSum()} €
+
+          <input ref={searchedRef} onChange={searchFromPMs} type="text"  />
+          <select>
+            { parcelMachines
+                .filter(el => el.A0_NAME === "EE")
+                .map(el => <option>{el.NAME}</option>)}
+          </select>
+
         </div>
       }
       
