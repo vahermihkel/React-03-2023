@@ -67,8 +67,15 @@ function App() {
         <Route path="admin/maintain-categories" element={ <MaintainCategories /> } />
         <Route path="admin/maintain-shops" element={ <MaintainShops /> } />
       </Routes>
+
+      <div className="footer">FOOTER</div>
     </div>
   );
 }
 
 export default App;
+
+// NodeJS on mootor, mis paneb Reacti käima
+// Angular
+// Vue
+// React

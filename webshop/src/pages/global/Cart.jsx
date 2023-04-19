@@ -76,7 +76,8 @@ function Cart() {
       }
       {/* {cart.length > 0 && } */}
       {cart.map((element, index) => 
-        <div className="product" key={index}>
+        <div className="product-wrapper">
+          <div className="product" key={index}>
             <img className="image" src={element.product.image} alt="" />
             <div className="name">{element.product.name}</div>
             <div className="price">{element.product.price.toFixed(2)}</div>
@@ -87,14 +88,20 @@ function Cart() {
             </div>
             <div className="total">{(element.product.price * element.quantity).toFixed(2)}</div>
             <img src="/remove.png" className="button" onClick={() => removeFromCart(index)} alt="" />
+          </div>
+          <div className="mobile-view">
+            <img src="/minus.png" className={element.quantity === 1 ? "disabled" : "button"} onClick={() => decreaseQuantity(index)} alt="" />
+            <div>{element.quantity}</div>
+            <img src="/plus.png" className="button" onClick={() => increaseQuantity(index)} alt="" />
+          </div>
         </div>
         )}
       {cart.length > 0 && 
         <div className="cart-bottom">
-          Total: {totalSum()} €
+          <div className="sum">Total: {totalSum()} €</div>
 
           <input ref={searchedRef} onChange={searchFromPMs} type="text"  />
-          <select>
+          <select className="parcelmachines">
             { parcelMachines
                 .filter(el => el.A0_NAME === "EE")
                 .map(el => <option>{el.NAME}</option>)}

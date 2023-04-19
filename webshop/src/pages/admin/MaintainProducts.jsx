@@ -22,22 +22,34 @@ function MaintainProducts() {
     <div>
       <input type="text" ref={searchedRef} onChange={searchFromProducts} />
       <div>{products.length} tk</div>
+      <table>
+        <tr>
+          <th>Image</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Image URL</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Active</th>
+        </tr>
         {products.map((product, index) => 
-          <div key={product.id}>
-            <img src={product.image} alt="" />
-            <div>{product.id}</div>
-            <div>{product.name}</div>
-            <div>{product.price}</div>
-            <div>{product.image}</div>
-            <div>{product.category}</div>
-            <div>{product.description}</div>
-            <div>{product.active}</div>
+          <tr key={product.id}>
+            <td><img className="image" src={product.image} alt="" /></td>
+            <td>{product.id}</td>
+            <td>{product.name}</td>
+            <td>{product.price}</td>
+            <td>{product.image}</td>
+            <td>{product.category}</td>
+            <td>{product.description}</td>
+            <td>{product.active}</td>
             <button onClick={() => deleteProduct(index)}>Kustuta</button>
             <Link to={"/admin/edit-product/" + product.id}>
               <button>Muuda</button>
             </Link>
-          </div>
+          </tr>
         )}
+      </table>
     </div>
   )
 }
