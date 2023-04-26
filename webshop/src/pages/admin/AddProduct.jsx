@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import productsFromFile from "../../data/products.json";
+import React, { useEffect, useRef, useState } from "react";
+// import productsFromFile from "../../data/products.json";
+import config from "../../data/config.json";
 
 function AddProduct() {
   const [message, setMessage] = useState("Lisa toode!");
@@ -11,6 +12,16 @@ function AddProduct() {
   const descriptionRef = useRef();
   const activeRef = useRef();
   const [isIdUnique, setIdUnique] = useState(true);
+  const [dbProducts, setDbProducts] = useState([]); // ALATI 1024 toodet
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        // setProducts(json || []);
+        setDbProducts(json || []);
+      })    // localStorage.getItem("VÕTI") || []
+  }, []);
 
   const add = () => {
     if (idRef.current.value === "") {
@@ -27,7 +38,7 @@ function AddProduct() {
     }
     // else {
       setMessage("Product " + nameRef.current.value + " added!");
-      productsFromFile.push({
+      dbProducts.push({
         id: Number(idRef.current.value),
         name: nameRef.current.value,
         price: Number(priceRef.current.value),
@@ -37,10 +48,12 @@ function AddProduct() {
         active: activeRef.current.checked,
       });
     // }
+    // PUT PÄRING ANDMEBAASI
+    fetch(config.productsDbUrl, {"method": "PUT", "body": JSON.stringify(dbProducts)});
   };
 
   const checkIdUniqueness = () => {
-      const index = productsFromFile.findIndex(product => product.id === Number(idRef.current.value));
+      const index = dbProducts.findIndex(product => product.id === Number(idRef.current.value));
       if (index === -1) {
         setIdUnique(true);
       } else {

@@ -15,6 +15,8 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 function Map(props) { 
 
+  // SIIN KA ANDMEBAASIST VÕTMINE useEffect abil
+
   return (
   <div>
 
@@ -24,6 +26,8 @@ function Map(props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      {/* kõigi kolme Marker asemel 
+              shops.map() */}
       <Marker position={[59.4219, 24.7935]}>
         <Popup>
           <a href="https://www.google.com/maps/place/%C3%9Clemiste+Centre/@59.4219418,24.7916783,17z/data=!3m1!4b1!4m6!3m5!1s0x4692eb54f4edfe43:0x206e6dcbdf41435e!8m2!3d59.4219391!4d24.793867!16s%2Fm%2F0hrdb05">

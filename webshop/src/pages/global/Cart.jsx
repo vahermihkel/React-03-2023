@@ -66,6 +66,33 @@ function Cart() {
     setParcelMachines(result);
   }
 
+  const pay = () => {
+    const url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
+
+    const paymentData = {
+      "api_username": "e36eb40f5ec87fa2",
+      "account_name": "EUR3D1",
+      "amount": totalSum(),
+      "order_reference": Math.random() * 9999999, // math.random - juhusliku numbri generaator 0-1: 0.32131
+      "nonce": "da31232mmmn31" + Math.random() * 9999999 + new Date(), // nonce
+      "timestamp": new Date(), // praegune aeg
+      "customer_url": "https://mihkel-web-03-2023.web.app"
+      };
+
+    const paymentHeaders = {
+      "Authorization": "Basic ZTM2ZWI0MGY1ZWM4N2ZhMjo3YjkxYTNiOWUxYjc0NTI0YzJlOWZjMjgyZjhhYzhjZA==",
+      "Content-Type": "application/json"
+    };
+
+    fetch(url, {"method": "POST", "body": JSON.stringify(paymentData), "headers": paymentHeaders})
+      .then(res => res.json())
+      .then(json => window.location.href = json.payment_link);
+  }
+
+  // window.location.href ---> tähendab välisele rakendusele suunamist
+  // navigate("/") <--- rakenduse siseselt JavaScriptis
+  // <Link to=""> <--- HTML-s
+
   return (
     <div>
       {cart.length > 0 && 
@@ -106,6 +133,8 @@ function Cart() {
                 .filter(el => el.A0_NAME === "EE")
                 .map(el => <option>{el.NAME}</option>)}
           </select>
+
+          <button onClick={pay}>Pay</button>
 
         </div>
       }

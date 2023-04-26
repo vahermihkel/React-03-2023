@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import productsFromFile from "../../data/products.json";
+// import productsFromFile from "../../data/products.json";
+import config from "../../data/config.json";
+import { Spinner } from 'react-bootstrap';
 
 function SingleProduct() {
   const { id } = useParams();
@@ -9,7 +11,22 @@ function SingleProduct() {
   // product.id abil leiab alati õige
 
   // PEAB TEGEMA: productsFromFile.find(e => e.id === Number(id))
-  const found = productsFromFile.find(element => element.id === Number(id));
+  const [dbProducts, setDbProducts] = useState([]); // ALATI 1024 toodet
+  const found = dbProducts.find(element => element.id === Number(id));
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setDbProducts(json || []);
+        setLoading(false);
+      })    // localStorage.getItem("VÕTI") || []
+  }, []);
+
+  if (isLoading === true) {
+    return <Spinner />
+  }
 
   return (
     <div>

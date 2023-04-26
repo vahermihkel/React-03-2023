@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
-import productsFromFile from "../../data/products.json";
+import React, { useEffect, useState } from 'react';
+// import productsFromFile from "../../data/products.json";
 // import cartFromFile from "../../data/cart.json";
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import Carousel from 'react-bootstrap/Carousel';
 import "../../css/HomePage.css";
+import config from "../../data/config.json";
+import { Spinner } from 'react-bootstrap';
 
 function HomePage() {
-  const [products, setProducts] = useState(productsFromFile);
+  const [products, setProducts] = useState([]); // kõikuv seisund
+  const [dbProducts, setDbProducts] = useState([]); // ALATI 240 toodet
+  const [isLoading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setProducts(json || []);
+        setDbProducts(json || []);
+        setLoading(false);
+      })    // localStorage.getItem("VÕTI") || []
+  }, []);
+
+  useEffect(() => {
+    fetch(config.categoriesDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setCategories(json || []);
+      })    // localStorage.getItem("VÕTI") || []
+  }, []);
 
   const sortAZ = () => {
     products.sort((a,b) => a.name.localeCompare(b.name));
@@ -47,21 +70,16 @@ function HomePage() {
     toast.success("Successfully added to cart!");
   }
 
-  // const filterProductsByCategory = (categoryClicked) => {
+  const filterProductsByCategory = (categoryClicked) => {
+                          // 240  ---> 60
+    const filteredProducts = dbProducts.filter(product => product.category === categoryClicked)
+               // 60
+    setProducts(filteredProducts);
+  }
 
-  // }
-
-  // const filterProductsByCategoryRobot = () => {
-
-  // }
-
-  // const filterProductsByCategoryMotorcycles = () => {
-
-  // }
-
-  // const filterProductsByCategoryMotor = () => {
-
-  // }
+  if (isLoading === true) {
+    return <div className="center"><br /><br /><Spinner /></div>
+  }
 
   return (
     <div>
@@ -107,7 +125,14 @@ function HomePage() {
       <Button onClick={sortPriceDesc}>Higher price first</Button>
 
       <div>{products.length} tk</div>
-      {/* <div className="content"> */}
+      {categories.map(element => 
+        <Button onClick={()=> filterProductsByCategory(element.name)}>
+          {element.name}
+        </Button>)}
+      {/* <Button onClick={()=> filterProductsByCategory("lamp")}>Lamp</Button>
+      <Button onClick={()=> filterProductsByCategory("led")}>Led</Button>
+      <Button onClick={()=> filterProductsByCategory("robot vacuum")}>Robot vacuums</Button>
+      <Button onClick={()=> filterProductsByCategory("stick vacuum")}>Stick vacuums</Button> */}
         <div className="products">
           {products.map(product => 
             <div className="home-product" key={product.id}>

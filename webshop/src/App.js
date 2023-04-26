@@ -1,9 +1,5 @@
 import './App.css';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link, Route, Routes } from 'react-router-dom';
-
+import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/global/HomePage';
 import Cart from './pages/global/Cart';
 import {ContactUs} from './pages/global/ContactUs';
@@ -15,11 +11,9 @@ import EditProduct from './pages/admin/EditProduct';
 import MaintainProducts from './pages/admin/MaintainProducts';
 import MaintainCategories from './pages/admin/MaintainCategories';
 import MaintainShops from './pages/admin/MaintainShops';
-
-import { useTranslation } from 'react-i18next';
+import NavigationBar from './components/NavigationBar';
 
 function App() {
-  const { t, i18n } = useTranslation(); 
 
   // Firebase-i üles  --->   faili järgi: 8-s, video järgi vaadata - 3.koolitus
   // react-toastify
@@ -32,27 +26,9 @@ function App() {
   // Pange mõnda teise projekti ka Bootstrap
   // Pange mõnda teise projekti ka React-i18next
 
-
-  const updateLanguage = (newLang) => {
-    i18n.changeLanguage(newLang);
-    localStorage.setItem("language", newLang);
-  }
-
   return (
     <div className="App">
-      <Navbar bg="primary" variant="dark">
-        <Container>
-          <Navbar.Brand as={Link} to="/">Webshop</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/admin">{t("admin")}</Nav.Link>
-            <Nav.Link as={Link} to="/contact">{t("contact")}</Nav.Link>
-            <Nav.Link as={Link} to="/shops">{t("shops")}</Nav.Link>
-            <Nav.Link as={Link} to="/cart">{t("cart")}</Nav.Link>
-          </Nav>
-          <img className="lang" src="/english.png" alt="" onClick={() => updateLanguage("en")} />
-          <img className="lang" src="/estonian.png" alt="" onClick={() => updateLanguage("ee")} />
-        </Container>
-      </Navbar>
+      <NavigationBar />
 
       <Routes>
         <Route path="" element={ <HomePage /> } />
