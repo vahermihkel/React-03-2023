@@ -55,3 +55,17 @@ export default App;
 // Angular
 // Vue
 // React
+
+// 1.05 child componendid --> props
+// 3.05 context ehk globaalne muutuja
+// 8.05 proovitöö
+
+// Lõpuprojekt:
+// Ükskõik mis asi, mis hõlmab Reacti kasutamist
+// Firebase-i üles
+
+// Võite midagi internetist võtta, mugandada enda jaoks
+// Tutorialid + Youtube + Udemy
+// Oma ideed
+
+// 31.05

@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 // import cartFromFile from "../../data/cart.json";
 import { Link } from 'react-router-dom';
-import "../../css/Cart.css";
+import styles from "../../css/Cart.module.css";
 import Button from '@mui/material/Button';
+import ParcelMachine from '../../components/cart/ParcelMachine';
+import Payment from '../../components/cart/Payment';
+import { CartSumContext } from '../../store/CartSumContext';
 
 // SALVESTUSE VARIANDID:
 // 1. Andmebaas - Amazon, Microsoft, Oracle
@@ -12,25 +15,12 @@ import Button from '@mui/material/Button';
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
-  const [parcelMachines, setParcelMachines] = useState([]); // mida välja näitan - 5, 2, 10, 500, 1255, 3, 0
-  const [dbParcelMachines, setDbParcelMachines] = useState([]); // mille seast filterdan -- ALATI 1255
-  const searchedRef = useRef();
-
-  // API endpoint    API otspunkt
-
-  // scrape / scraping
-  useEffect(() => {
-    fetch("https://www.omniva.ee/locations.json")
-      .then(res => res.json())
-      .then(json => {
-        setParcelMachines(json);
-        setDbParcelMachines(json);
-      })
-  }, []);
+  const { setCartSum } = useContext(CartSumContext);
 
   const emptyCart = () => {
     setCart([]); // uuendab HTMLi
     localStorage.setItem("cart", JSON.stringify([])); // see uuendab localStorage-t
+    setCartSum("0.00");
   };
 
   const decreaseQuantity = (index) => {
@@ -40,18 +30,21 @@ function Cart() {
     cart[index].quantity = cart[index].quantity - 1;
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(totalSum());
   }
 
   const increaseQuantity = (index) => {
     cart[index].quantity = cart[index].quantity + 1;
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(totalSum());
   }
 
   const removeFromCart = (index) => {
     cart.splice(index, 1);
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(totalSum());
   }
 
   const totalSum = () => {
@@ -59,82 +52,45 @@ function Cart() {
     cart.forEach(element => sum = sum + element.product.price * element.quantity);
     return sum.toFixed(2);
   };
-
-  const searchFromPMs = () => {
-    const result = dbParcelMachines.filter(el => 
-      el.NAME.toLowerCase().includes(searchedRef.current.value.toLowerCase()))
-    setParcelMachines(result);
-  }
-
-  const pay = () => {
-    const url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
-
-    const paymentData = {
-      "api_username": "e36eb40f5ec87fa2",
-      "account_name": "EUR3D1",
-      "amount": totalSum(),
-      "order_reference": Math.random() * 9999999, // math.random - juhusliku numbri generaator 0-1: 0.32131
-      "nonce": "da31232mmmn31" + Math.random() * 9999999 + new Date(), // nonce
-      "timestamp": new Date(), // praegune aeg
-      "customer_url": "https://mihkel-web-03-2023.web.app"
-      };
-
-    const paymentHeaders = {
-      "Authorization": "Basic ZTM2ZWI0MGY1ZWM4N2ZhMjo3YjkxYTNiOWUxYjc0NTI0YzJlOWZjMjgyZjhhYzhjZA==",
-      "Content-Type": "application/json"
-    };
-
-    fetch(url, {"method": "POST", "body": JSON.stringify(paymentData), "headers": paymentHeaders})
-      .then(res => res.json())
-      .then(json => window.location.href = json.payment_link);
-  }
-
-  // window.location.href ---> tähendab välisele rakendusele suunamist
-  // navigate("/") <--- rakenduse siseselt JavaScriptis
-  // <Link to=""> <--- HTML-s
+  
 
   return (
     <div>
       {cart.length > 0 && 
-        <div className="cart-top">
+        <div className={styles["cart-top"]}>
           <Button variant="outlined" onClick={emptyCart}>Empty all</Button>
           <div>Products in cart: {cart.length}</div>
         </div>
       }
       {/* {cart.length > 0 && } */}
       {cart.map((element, index) => 
-        <div className="product-wrapper">
-          <div className="product" key={index}>
-            <img className="image" src={element.product.image} alt="" />
-            <div className="name">{element.product.name}</div>
-            <div className="price">{element.product.price.toFixed(2)}</div>
-            <div className="quantity">
+        <div className={styles["product-wrapper"]}>
+          <div className={styles.product} key={index}>
+            <img className={styles.image} src={element.product.image} alt="" />
+            <div className={styles.name}>{element.product.name}</div>
+            <div className={styles.price}>{element.product.price.toFixed(2)}</div>
+            <div className={styles.quantity}>
               <img src="/minus.png" className={element.quantity === 1 ? "disabled" : "button"} onClick={() => decreaseQuantity(index)} alt="" />
               <div>{element.quantity}</div>
-              <img src="/plus.png" className="button" onClick={() => increaseQuantity(index)} alt="" />
+              <img src="/plus.png" className={styles.button} onClick={() => increaseQuantity(index)} alt="" />
             </div>
-            <div className="total">{(element.product.price * element.quantity).toFixed(2)}</div>
-            <img src="/remove.png" className="button" onClick={() => removeFromCart(index)} alt="" />
+            <div className={styles.total}>{(element.product.price * element.quantity).toFixed(2)}</div>
+            <img src="/remove.png" className={styles.button} onClick={() => removeFromCart(index)} alt="" />
           </div>
-          <div className="mobile-view">
+          <div className={styles["mobile-view"]}>
             <img src="/minus.png" className={element.quantity === 1 ? "disabled" : "button"} onClick={() => decreaseQuantity(index)} alt="" />
             <div>{element.quantity}</div>
-            <img src="/plus.png" className="button" onClick={() => increaseQuantity(index)} alt="" />
+            <img src="/plus.png" className={styles.button} onClick={() => increaseQuantity(index)} alt="" />
           </div>
         </div>
         )}
       {cart.length > 0 && 
-        <div className="cart-bottom">
-          <div className="sum">Total: {totalSum()} €</div>
+        <div className={styles["cart-bottom"]}>
+          <div className={styles.sum}>Total: {totalSum()} €</div>
 
-          <input ref={searchedRef} onChange={searchFromPMs} type="text"  />
-          <select className="parcelmachines">
-            { parcelMachines
-                .filter(el => el.A0_NAME === "EE")
-                .map(el => <option>{el.NAME}</option>)}
-          </select>
+          <ParcelMachine />
 
-          <button onClick={pay}>Pay</button>
+          <Payment sum={totalSum()} />
 
         </div>
       }

@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import config from "../../data/config.json";
 import { Link } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import styles from "../../css/MaintainProducts.module.css";
+import cartStyles from "../../css/Cart.module.css";
+
 
 function MaintainProducts() {
   // const [products, setProducts] = useState(productsFromFile);
@@ -47,21 +50,22 @@ function MaintainProducts() {
           <th>ID</th>
           <th>Name</th>
           <th>Price</th>
-          <th>Image URL</th>
+          {/* <th>Image URL</th> */}
           <th>Category</th>
           <th>Description</th>
-          <th>Active</th>
+          {/* <th>Active</th> */}
+          <th>Actions</th>
         </tr>
         {products.map((product, index) => 
-          <tr key={product.id}>
-            <td><img className="image" src={product.image} alt="" /></td>
+          <tr key={product.id} className={ product.active === true ? styles.active: styles.inactive }>
+            <td><img className={cartStyles.image} src={product.image} alt="" /></td>
             <td>{product.id}</td>
             <td>{product.name}</td>
             <td>{product.price}</td>
-            <td>{product.image}</td>
+            {/* <td>{product.image}</td> */}
             <td>{product.category}</td>
             <td>{product.description}</td>
-            <td>{product.active}</td>
+            {/* <td>{product.active}</td> */}
             <button onClick={() => deleteProduct(index)}>Kustuta</button>
             <Link to={"/admin/edit-product/" + product.id}>
               <button>Muuda</button>
